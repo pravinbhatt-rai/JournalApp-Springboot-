@@ -1,0 +1,26 @@
+weatherstack:
+  api-key: 119b7a8875e2b8ff0b6d6b844feb0f03
+
+spring:
+  profiles:
+    active: dev
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: pravinbhattarai45@gmail.com
+    password: paqm gzdc tier mrmb
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
+
+
+
+
+
+
+

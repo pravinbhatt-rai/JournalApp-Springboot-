@@ -1,0 +1,14 @@
+
+
+
+spring:
+  application:
+    name: journalapp
+
+  data:
+    mongodb:
+      uri: mongodb+srv://pravinbhattarai45_db_user:LDQirHD49W55siJb@cluster0.4xzdwfw.mongodb.net/journaldb
+      auto-index-creation: true
+
+server:
+  port: 8080

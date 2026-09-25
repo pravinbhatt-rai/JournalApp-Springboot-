@@ -1,8 +1,11 @@
 package com.pravinbhattarai.journalapp.service;
 
+import com.mongodb.DuplicateKeyException;
 import com.pravinbhattarai.journalapp.entity.UserEntry;
 import com.pravinbhattarai.journalapp.repositery.UserEntryRepositery;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -26,19 +29,30 @@ public class UserEntryService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    private static final Logger logger= LoggerFactory.getLogger(UserEntryService.class);
+
+
 
     // CREATE USER
-    public void createUser(UserEntry user) {
+    public boolean createUser(UserEntry user) {
+        try {
 
-        user.setPassword(
-                passwordEncoder.encode(user.getPassword())
-        );
+            user.setPassword(
+                    passwordEncoder.encode(user.getPassword())
+            );
 
-        if (user.getRoles() == null || user.getRoles().isEmpty()) {
-            user.setRoles(List.of("USER"));
+            if (user.getRoles() == null || user.getRoles().isEmpty()) {
+                user.setRoles(List.of("USER"));
+            }
+
+            userEntryRepositery.save(user);
+
+            return true;
+
+        } catch (Exception e) {
+            logger.warn("Username already exists: {}", user.getUserName());
+            return false;
         }
-
-        userEntryRepositery.save(user);
     }
 
     public UserEntry createAdmin(UserEntry userEntry){

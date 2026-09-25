@@ -3,6 +3,8 @@ package com.pravinbhattarai.journalapp.controller;
 import com.pravinbhattarai.journalapp.entity.UserEntry;
 import com.pravinbhattarai.journalapp.service.UserEntryService;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,11 +13,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserEntryService userEntryService;
+
+    private static final Logger logger= LoggerFactory.getLogger(UserController.class);
+
 
 
 
@@ -44,8 +51,14 @@ public class UserController {
 
     @PostMapping
     public Boolean createUser(@RequestBody UserEntry myEntry){
-        userEntryService.createUser(myEntry);
-        return true;
+        try {
+            userEntryService.createUser(myEntry);
+            return true;
+
+        } catch (Exception e) {
+            logger.info("Duplicate username");
+            return  false;
+        }
 
     }
 

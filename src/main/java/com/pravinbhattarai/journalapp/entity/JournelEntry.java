@@ -1,6 +1,7 @@
 package com.pravinbhattarai.journalapp.entity;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.pravinbhattarai.journalapp.enums.SentimentEnums;
 import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -26,4 +27,6 @@ public class JournelEntry {
     private String content;
 
     private LocalDateTime date;
+
+    private SentimentEnums sentiment;
 }

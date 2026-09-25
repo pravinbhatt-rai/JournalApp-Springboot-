@@ -3,13 +3,17 @@ package com.pravinbhattarai.journalapp.service;
 import com.pravinbhattarai.journalapp.entity.JournelEntry;
 import com.pravinbhattarai.journalapp.entity.UserEntry;
 import com.pravinbhattarai.journalapp.repositery.JournalEntryRepositery;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -17,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class JournalEntryService {
 
@@ -30,16 +35,17 @@ public class JournalEntryService {
     private UserEntryService userEntryService;
 
 
+
     // CREATE JOURNAL ENTRY FOR USERNAME
     @Transactional
-    public void SaveEntry(
+    public void saveEntry(
             JournelEntry journelEntry,
             String userName) {
 
         UserEntry user = userEntryService.findByUserName(userName);
 
         if (user == null) {
-            throw new RuntimeException("User not found");
+            log.info("user not found");
         }
 
         journelEntry.setDate(LocalDateTime.now());

@@ -97,7 +97,7 @@ public class JournalEntryControllerv2 {
             Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
             assert authentication != null;
             String userName=authentication.getName();
-            journalEntryService.SaveEntry(
+            journalEntryService.saveEntry(
                     myEntry,
                     userName
             );
